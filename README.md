@@ -3,7 +3,7 @@
 
 Add a tile to Android Quick Settings that can be pressed to toggle the NFC state.
 
-<img src="images/nfc-tile.png">
+<img src="images/nfc-tile.png" width="400">
 
 ## Download
 
