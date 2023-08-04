@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+        From API 26 implicit broadcast receiver do not work anymore, there are some exceptions
+        (https://developer.android.com/guide/components/broadcast-exceptions)
+        but unfortunately android.nfc.action.ADAPTER_STATE_CHANGED is not one of these.
+        Since android.permission.RECEIVE_BOOT_COMPLETED is one of these exceptions,
+        listen to it in order to start the service that will register the
+        NFC state broadcast receiver explicitly.
+    -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Needed to start foreground service -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <!-- Needed to change the NFC state -->
+    <uses-permission
+        android:name="android.permission.WRITE_SECURE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+
+
+    <application
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            tools:targetApi="33">
+
+        <receiver
+            android:name=".BootCompletedBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+
+        <service android:name=".NfcStateService" />
+
+        <service
+             android:name=".NfcTileService"
+             android:label="NFC"
+             android:exported="true"
+             android:icon="@drawable/nfcqs"
+             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+
+            <meta-data android:name="android.service.quicksettings.ACTIVE_TILE"
+                android:value="true" />
+            <meta-data android:name="android.service.quicksettings.TOGGLEABLE_TILE"
+                android:value="true" />
+             <intent-filter>
+                 <action android:name="android.service.quicksettings.action.QS_TILE" />
+             </intent-filter>
+         </service>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.NfcTile">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

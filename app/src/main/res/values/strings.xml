@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">NFC Tile</string>
+    <string name="service_notification_channel_description">NFC Service</string>
+    <string name="service_notification_content_title">NFC Tile Service</string>
+    <string name="service_notification_content_text">Tap to hide.</string>
+    <string name="permission_granted_description">You can find the NFC Tile in the Quick Settings Panel.</string>
+    <string name="permission_required">WRITE_SECURE_SETTINGS permission needed</string>
+    <string name="permission_required_message">To grant this permission, do the following:\n\n1. Setup ADB on your computer and phone\n2. Connect your phone to your computer\n3. Run this command on your computer Terminal or Command Prompt in one line:</string>
+    <string name="adb_command">adb shell pm grant org.docheinstein.nfctile android.permission.WRITE_SECURE_SETTINGS</string>
+    <string name="turning_on">Turning on…</string>
+    <string name="turning_off">Turning off…</string>
+</resources>
